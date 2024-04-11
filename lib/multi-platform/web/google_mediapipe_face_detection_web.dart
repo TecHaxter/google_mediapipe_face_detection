@@ -35,11 +35,27 @@ class GoogleMediaPipeFaceDetectionMultiPlatform
 
   @override
   Future<void> load() async {
-    html.document.body!.append(html.ScriptElement()
-      ..src =
-          'https://cdn.jsdelivr.net/gh/TecHaxter/google_mediapipe_face_detection_wrapper@main/build/dist/index.js' // ignore: unsafe_html
-      ..type = 'application/javascript'
-      ..defer = true);
+    final Completer<void> completer = Completer<void>();
+    final existingScript =
+        html.document.querySelector('#face_detection_wrapper_js');
+    if (existingScript == null) {
+      final script = html.ScriptElement()
+        ..id = "face_detection_wrapper_js"
+        ..src =
+            'https://cdn.jsdelivr.net/gh/TecHaxter/google_mediapipe_face_detection_wrapper@main/build/dist/index.js' // ignore: unsafe_html
+        ..type = 'application/javascript'
+        ..defer = true
+        ..onLoad.listen((_) {
+          completer.complete();
+        })
+        ..onError.listen((error) {
+          completer.completeError(error);
+        });
+      html.document.body!.append(script);
+    } else {
+      completer.complete();
+    }
+    await completer.future; // Wait for the script to load.
     _wrapper = GoogleMediaPipeFaceDetectorWrapper();
     await promiseToFuture(_wrapper!.load());
   }

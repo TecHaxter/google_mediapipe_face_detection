@@ -1,6 +1,6 @@
 name: google_mediapipe_face_detection
 description: "A flutter plugin that implements Google's MediaPipe Face Detection"
-version: 0.0.1
+version: 0.0.1+1
 homepage: https://khushal-rao.web.app
 repository: https://github.com/TecHaxter/google_mediapipe_face_detection
 
