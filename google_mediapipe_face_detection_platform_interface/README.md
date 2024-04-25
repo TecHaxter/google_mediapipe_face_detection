@@ -1,39 +1,15 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# google_mediapipe_face_detection_platform_interface
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+A common platform interface for the [`google_mediapipe_face_detection`][1] plugin.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
+This interface allows platform-specific implementations of the `google_mediapipe_face_detection`
+plugin, as well as the plugin itself, to ensure they are supporting the
+same interface.
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+# Usage
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
-```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+To implement a new platform-specific implementation of `google_mediapipe_face_detection`, extend
+[`GoogleMediapipeFaceDetectionPlatform`][2] with an implementation that performs the
+platform-specific behavior, and when you register your plugin, set the default
+`GoogleMediapipeFaceDetectionPlatformPlatform` by calling
+`GoogleMediapipeFaceDetectionPlatformPlatform.instance = MyPlatformGoogleMediapipeFaceDetection()`.

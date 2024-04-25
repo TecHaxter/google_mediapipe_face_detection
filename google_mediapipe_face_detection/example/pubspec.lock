@@ -160,20 +160,22 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.1+1"
+    version: "0.0.2"
   google_mediapipe_face_detection_platform_interface:
     dependency: transitive
     description:
-      path: "../../google_mediapipe_face_detection_platform_interface"
-      relative: true
-    source: path
+      name: google_mediapipe_face_detection_platform_interface
+      sha256: "1bd96411325bf87332db5f00aec015650f90b0f48aa08640d6281d60b33d0713"
+      url: "https://pub.dev"
+    source: hosted
     version: "0.0.1"
   google_mediapipe_face_detection_web:
     dependency: transitive
     description:
-      path: "../../google_mediapipe_face_detection_web"
-      relative: true
-    source: path
+      name: google_mediapipe_face_detection_web
+      sha256: "7fc8c6fa3246f4efc7ba39226dc369c1d3c161749cf7a82284190db960470950"
+      url: "https://pub.dev"
+    source: hosted
     version: "0.0.1"
   google_mlkit_commons:
     dependency: "direct main"
