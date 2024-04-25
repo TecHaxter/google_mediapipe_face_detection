@@ -1,0 +1,34 @@
+name: google_mediapipe_face_detection
+description: "A flutter plugin that implements Google's MediaPipe Face Detection"
+version: 0.0.1+1
+homepage: https://khushal-rao.web.app
+repository: https://github.com/TecHaxter/google_mediapipe_face_detection
+publish_to: none
+
+environment:
+  sdk: ">=3.2.2 <4.0.0"
+  flutter: ">=3.3.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  plugin_platform_interface: ^2.1.8
+  google_mlkit_commons: ^0.7.1
+  js: ^0.6.3
+  google_mediapipe_face_detection_platform_interface:
+    path: ../google_mediapipe_face_detection_platform_interface
+  google_mediapipe_face_detection_web:
+    path: ../google_mediapipe_face_detection_web
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  plugin:
+    platforms:
+      web:
+        default_package: google_mediapipe_face_detection_web
