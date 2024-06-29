@@ -23,6 +23,7 @@ class MethodChannelGoogleMediapipeFaceDetection
     return _channel
         .invokeListMethod<Map<String, dynamic>?>(
           'processImage',
+          inputImage.toJson(),
         )
         .then(
           (List<Map<String, dynamic>?>? value) =>
