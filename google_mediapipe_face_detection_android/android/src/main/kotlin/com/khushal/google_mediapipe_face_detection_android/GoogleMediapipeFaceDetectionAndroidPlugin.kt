@@ -1,19 +1,19 @@
-package com.example.google_mediapipe_face_detection_android
+package com.khushal.google_mediapipe_face_detection_android
 
 import android.content.Context
-import android.net.Uri
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import com.google.mediapipe.framework.image.BitmapImageBuilder
 import com.google.mediapipe.framework.image.MPImage
 import com.google.mediapipe.tasks.core.BaseOptions
 import com.google.mediapipe.tasks.vision.core.RunningMode
 import com.google.mediapipe.tasks.vision.facedetector.FaceDetector
 import com.google.mediapipe.tasks.vision.facedetector.FaceDetectorResult
-
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
-import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 
 /** GoogleMediapipeFaceDetectionAndroidPlugin */
 class GoogleMediapipeFaceDetectionAndroidPlugin: FlutterPlugin, MethodCallHandler {
@@ -41,23 +41,26 @@ class GoogleMediapipeFaceDetectionAndroidPlugin: FlutterPlugin, MethodCallHandle
         }
         "processImage" -> {
           try {
-            val inputImageMap = call.argument<Map<String, Any>>("input_image") ?: throw Exception("No input image given")
-            // Convert the input Bitmap object to an MPImage object to run inference
-            val mpImage: MPImage = BitmapImageBuilder(context, Uri.parse(inputImageMap["path"] as String)).build()
+            // Get image path from method channel arguments
+            val imagePath = call.argument<String>("path") ?: throw Exception("No input image given")
+            // Get image Bitmap object from image path
+            val bitmap: Bitmap = BitmapFactory.decodeFile(imagePath)
+            // Convert the image Bitmap object to an MPImage object to run inference
+            val mpImage: MPImage = BitmapImageBuilder(bitmap).build()
             // Detect faces from MPImage
             val faceDetectorResult: FaceDetectorResult = faceDetector.detect(mpImage)
             // Convert detected faces to list of
-            val faces: List<Map<String, Float>> =  faceDetectorResult.detections().map {
-              mapOf<String, Float>(
-                "left" to it.boundingBox().left,
-                "top" to it.boundingBox().top,
-                "right" to it.boundingBox().right,
-                "bottom" to it.boundingBox().bottom,
+            val faces: List<HashMap<String, Double>> =  faceDetectorResult.detections().map {
+              hashMapOf(
+                "left" to it.boundingBox().left.toDouble(),
+                "top" to it.boundingBox().top.toDouble(),
+                "right" to it.boundingBox().right.toDouble(),
+                "bottom" to it.boundingBox().bottom.toDouble(),
               )
             }
             result.success(faces)
           } catch (e: Exception) {
-            result.success(arrayOf<Map<String, Float>>())
+            result.error("DETECTION_FAILED", e.message, null)
           }
         }
         "close" -> {
@@ -65,7 +68,7 @@ class GoogleMediapipeFaceDetectionAndroidPlugin: FlutterPlugin, MethodCallHandle
             faceDetector.close()
             result.success(true)
           } catch (e: Exception) {
-            result.success(false)
+            result.error("CLOSING_FAILED", e.message, null)
           }
         }
         "load" -> {
@@ -76,7 +79,6 @@ class GoogleMediapipeFaceDetectionAndroidPlugin: FlutterPlugin, MethodCallHandle
             val optionsBuilder =
               FaceDetector.FaceDetectorOptions.builder()
                 .setBaseOptions(baseOptions)
-                .setMinDetectionConfidence(Float.MIN_VALUE)
                 .setRunningMode(RunningMode.IMAGE)
 
             val options = optionsBuilder.build()
@@ -85,7 +87,7 @@ class GoogleMediapipeFaceDetectionAndroidPlugin: FlutterPlugin, MethodCallHandle
               FaceDetector.createFromOptions(context, options)
             result.success(true)
           } catch (e: Exception) {
-            result.success(false)
+            result.error("LOADING_FAILED", e.message, null)
           }
         }
         else -> {

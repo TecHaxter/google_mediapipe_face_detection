@@ -1,8 +1,3 @@
+library google_mediapipe_face_detection_android;
 
-import 'google_mediapipe_face_detection_android_platform_interface.dart';
-
-class GoogleMediapipeFaceDetectionAndroid {
-  Future<String?> getPlatformVersion() {
-    return GoogleMediapipeFaceDetectionAndroidPlatform.instance.getPlatformVersion();
-  }
-}
+export 'src/google_mediapipe_face_detection_android.dart';

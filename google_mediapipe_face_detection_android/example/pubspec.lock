@@ -100,6 +100,22 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  google_mediapipe_face_detection_platform_interface:
+    dependency: transitive
+    description:
+      name: google_mediapipe_face_detection_platform_interface
+      sha256: "1bd96411325bf87332db5f00aec015650f90b0f48aa08640d6281d60b33d0713"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
+  google_mlkit_commons:
+    dependency: transitive
+    description:
+      name: google_mlkit_commons
+      sha256: "27d626c66a181351a953eba5b6ff1ff123aadb891b4dab085b292118f039d6ac"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.1"
   integration_test:
     dependency: "direct dev"
     description: flutter
